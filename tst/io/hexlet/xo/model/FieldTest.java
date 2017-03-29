@@ -57,4 +57,43 @@ public class FieldTest {
         } catch (final InvalidPointException e) {}
     }
 
+    @Test
+    public void getFigureWhenYIsLessThenZero() throws Exception {
+
+        final Field field = new Field();
+        final Point inputPoint = new Point(0,-1);
+
+        try {
+
+            field.getFigure(inputPoint);
+            fail();
+        } catch (final InvalidPointException e) {}
+    }
+
+    @Test
+    public void getFigureWhenXMoreSize() throws Exception {
+
+        final Field field = new Field();
+        final Point inputPoint = new Point(field.getSize() + 1,0);
+
+        try {
+
+            field.getFigure(inputPoint);
+            fail();
+        } catch (final InvalidPointException e) {}
+    }
+
+    @Test
+    public void getFigureWhenYMoreSize() throws Exception {
+
+        final Field field = new Field();
+        final Point inputPoint = new Point(0,field.getSize() + 1);
+
+        try {
+
+            field.getFigure(inputPoint);
+            fail();
+        } catch (final InvalidPointException e) {}
+    }
+
 }
