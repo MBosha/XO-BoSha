@@ -97,8 +97,8 @@ public class FieldTest {
         } catch (final InvalidPointException e) {}
     }
 
-    @Test
-    public void setFigureWhenAlreadyOccupited() throws Exception {
+    //@Test
+/*    public void setFigureWhenAlreadyOccupited() throws Exception {
 
         final Field field = new Field();
         final Point inputPoint = new Point(0,0);
@@ -111,6 +111,6 @@ public class FieldTest {
         } catch (final AlreadyOccupiedException e) {}
 
 
-    }
+    }*/
 
 }
