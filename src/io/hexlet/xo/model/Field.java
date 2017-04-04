@@ -1,7 +1,7 @@
 package io.hexlet.xo.model;
 
 
-import io.hexlet.xo.model.exception.InvalidPointException;
+import io.hexlet.xo.model.exceptions.InvalidPointException;
 
 import java.awt.*;
 
@@ -11,46 +11,36 @@ public class Field {
 
     private final Figure[][] field;
 
-    private final int fieldSize;
+    private final int filedSize;
 
-    public Field(final int fieldSize) {
-        this.fieldSize = fieldSize;
-        field = new Figure[fieldSize][fieldSize];
+    public Field(final int filedSize) {
+        this.filedSize = filedSize;
+        field = new Figure[filedSize][filedSize];
     }
 
-
     public int getSize() {
-
-        return field.length;
+        return filedSize;
     }
 
     public Figure getFigure(final Point point) throws InvalidPointException {
-
-        if (!chekPoint(point)) {
-
+        if (!checkPoint(point)) {
             throw new InvalidPointException();
         }
-
         return field[point.x][point.y];
     }
 
     public void setFigure(final Point point, final Figure figure) throws InvalidPointException {
-
-        if (!chekPoint(point)) {
-
+        if (!checkPoint(point)) {
             throw new InvalidPointException();
         }
-
         field[point.x][point.y] = figure;
     }
 
-    private boolean chekPoint (final Point point) {
-
-        return chekCoordinate(point.x, field.length) && chekCoordinate(point.y, field[point.x].length);
+    private boolean checkPoint(final Point point) {
+        return checkCoordinate(point.x, field.length) && checkCoordinate(point.y, field[point.x].length);
     }
 
-    private boolean chekCoordinate (final int coordinate, final int maxCoordinate) {
-
+    private boolean checkCoordinate(final int coordinate, final int maxCoordinate) {
         return coordinate >= MIN_COORDINATE && coordinate < maxCoordinate;
     }
 

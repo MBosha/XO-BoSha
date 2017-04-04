@@ -1,91 +1,62 @@
 package io.hexlet.xo.controllers;
 
+
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
-import io.hexlet.xo.model.exception.InvalidPointException;
-
-import java.awt.*;
+import io.hexlet.xo.model.Point;
+import io.hexlet.xo.model.exceptions.InvalidPointException;
 
 public class WinnerController {
 
     public Figure getWinner(final Field field) {
-
         try {
+            for (int i = 0; i < 3; i++)
+                if (check(field, new Point(i, 0), p -> new Point(p.x, p.y + 1)))
+                    return field.getFigure(new Point(i, 0));
 
-            //проверка горизонталей
-            for (int i = 0; i < field.getSize(); i++) {
-
-                if (check(field, new Point(i, 0), new IPointChanger() {
-                    @Override
-                    public Point next(Point point) {
-                        return new Point(point.x, point.y + 1);
-                    }
-               }))
-               return field.getFigure(new Point(i, 0));
-            }
-
-            //проверка вертикалей
-            for (int i = 0; i < field.getSize(); i++) {
-
-                if (check(field, new Point(0, i), new IPointChanger() {
-                    @Override
-                    public Point next(Point point) {
-                        return new Point(point.x + 1, point.y);
-                    }
-                }))
+            for (int i = 0; i < 3; i++)
+                if (check(field, new Point(0, i), p -> new Point(p.x + 1, p.y)))
                     return field.getFigure(new Point(0, i));
-            }
 
-            //проверка главной диагонали
-            for (int i = 0; i < field.getSize(); i++) {
-
-                if (check(field, new Point(0, 0), new IPointChanger() {
-                    @Override
-                    public Point next(Point point) {
-                        return new Point(point.x + 1, point.y + 1);
-                    }
-                }))
-                    return field.getFigure(new Point(0, 0));
-            }
-
-            //проверка побочной диагонали
-            for (int i = 0; i < field.getSize(); i++) {
-
-                if (check(field, new Point(0, field.getSize()), new IPointChanger() {
-                    @Override
-                    public Point next(Point point) {
-                        return new Point(point.x + 1, point.y - 1);
-                    }
-                }))
-                    return field.getFigure(new Point(0, field.getSize()));
-            }
-
-            if (field.getFigure(new Point(0, 0)) == (field.getFigure(new Point(0, 1))) &&
-                    field.getFigure(new Point(0, 0)) == (field.getFigure(new Point(0, 2)))) {
+            if (check(field, new Point(0, 0), p -> new Point(p.x + 1, p.y + 1)))
                 return field.getFigure(new Point(0, 0));
-            }
-            } catch (InvalidPointException e) {
-                e.printStackTrace();
-                return null;
+
+            if (check(field, new Point(0, 2), p -> new Point(p.x + 1, p.y - 1)))
+                return field.getFigure(new Point(1, 1));
+
+        } catch (final InvalidPointException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private boolean check(final Field field,
+                          final Point currentPoint,
+                          final IPointGenerator pointGenerator) {
+        final Figure currentFigure;
+        final Figure nextFigure;
+        final Point nextPoint = pointGenerator.next(currentPoint);
+        try {
+            currentFigure = field.getFigure(currentPoint);
+
+            if (currentFigure == null)
+                return false;
+
+            nextFigure = field.getFigure(nextPoint);
+        } catch (final InvalidPointException e) {
+            return true;
         }
 
-        private boolean check(final Field field1, final Point startPoint, IPointChanger pointChanger) {
-
-            final Point p1 = startPoint;
-
-            final Point p2 = pointChanger.next(p1);
-
-            final Point p3 = pointChanger.next(p2);
-
+        if (currentFigure != nextFigure)
             return false;
-        }
 
-        private interface IPointChanger {
+        return check(field, nextPoint, pointGenerator);
+    }
 
-            Point next(final Point point);
-        }
+    private interface IPointGenerator {
 
-
+        Point next(final Point point);
 
     }
+
 }

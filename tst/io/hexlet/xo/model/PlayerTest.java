@@ -1,5 +1,7 @@
 package io.hexlet.xo.model;
 
+import io.hexlet.xo.model.Figure;
+import io.hexlet.xo.model.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

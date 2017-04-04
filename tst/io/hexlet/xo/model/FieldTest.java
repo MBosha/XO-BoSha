@@ -1,9 +1,9 @@
 package io.hexlet.xo.model;
 
-import io.hexlet.xo.model.exception.InvalidPointException;
+import io.hexlet.xo.model.exceptions.InvalidPointException;
 import org.junit.Test;
 
-import java.awt.*;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
