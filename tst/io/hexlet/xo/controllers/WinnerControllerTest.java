@@ -24,7 +24,7 @@ public class WinnerControllerTest {
         }
     }
 
-    @Test
+/*    @Test
     public void testGetWinnerWhenNoWinnerRow() throws Exception {
         final WinnerController winnerController = new WinnerController();
         for (int i = 0; i < 3; i++) {
@@ -209,6 +209,6 @@ public class WinnerControllerTest {
             field.setFigure(new Point(fieldSize-1-j, j), Figure.X);
         }
         assertNull(winnerController.getWinner(field));
-    }
+    }*/
 
 }
