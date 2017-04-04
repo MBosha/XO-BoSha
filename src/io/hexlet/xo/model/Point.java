@@ -5,13 +5,20 @@ public class Point {
 
     public final int x;
 
-    public Point(final int x, final int y) {
+    public final int y;
+
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    public int getX() {
+        return x;
+    }
 
-    public final int y;
+    public int getY() {
+        return y;
+    }
 }
 
 

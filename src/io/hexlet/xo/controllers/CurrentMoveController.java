@@ -6,8 +6,6 @@ import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Point;
 import io.hexlet.xo.model.exceptions.InvalidPointException;
 
-import java.awt.*;
-
 public class CurrentMoveController {
 
     public Figure currentMove(final Field field) {

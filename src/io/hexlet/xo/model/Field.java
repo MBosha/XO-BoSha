@@ -3,8 +3,6 @@ package io.hexlet.xo.model;
 
 import io.hexlet.xo.model.exceptions.InvalidPointException;
 
-import java.awt.*;
-
 public class Field {
 
     private static final int MIN_COORDINATE = 0;

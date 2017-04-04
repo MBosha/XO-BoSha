@@ -3,10 +3,9 @@ package io.hexlet.xo.controllers;
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Point;
-
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class WinnerControllerTest {
 
@@ -21,4 +20,16 @@ public class WinnerControllerTest {
             assertEquals(Figure.X, winnerController.getWinner(field));
         }
     }
+
+    public void testGetWinnerWhenNoWinnerRow() throws Exception {
+        final WinnerController winnerController = new WinnerController();
+        for (int i = 0; i < 3; i++) {
+            final Field field = new Field(3);
+            field.setFigure(new Point(i, 0), Figure.X);
+            field.setFigure(new Point(i, 1), Figure.X);
+            field.setFigure(new Point(i, 2), Figure.O);
+            assertEquals(Figure.X, winnerController.getWinner(field));
+        }
+    }
+
 }
