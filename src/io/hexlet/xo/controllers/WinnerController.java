@@ -6,32 +6,26 @@ import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Point;
 import io.hexlet.xo.model.exceptions.InvalidPointException;
 
+@SuppressWarnings("ALL")
 public class WinnerController {
 
 
+    @SuppressWarnings("ControlFlowStatementWithoutBraces")
     public Figure getWinner(final Field field) {
         final int fieldSize = field.getSize();
         try {
             for (int i = 0; i < fieldSize; i++)
-                if (check(field, new Point(i, 0), point -> {
-                    return new Point(point.getX(), point.getY() + 1);
-                }))
+                if (check(field, new Point(i, 0), (Point point) -> new Point(point.getX(), point.getY() + 1)))
                     return field.getFigure(new Point(i, 0));
 
             for (int i = 0; i < fieldSize; i++)
-                if (check(field, new Point(0, i), point -> {
-                    return new Point(point.getX() + 1, point.getY());
-                }))
+                if (check(field, new Point(0, i), point -> new Point(point.getX() + 1, point.getY())))
                     return field.getFigure(new Point(0, i));
 
-            if (check(field, new Point(0, 0), point -> {
-                return new Point(point.getX() + 1, point.getY() + 1);
-            }))
+            if (check(field, new Point(0, 0), point -> new Point(point.getX() + 1, point.getY() + 1)))
                 return field.getFigure(new Point(0, 0));
 
-            if (check(field, new Point(0, fieldSize - 1), point -> {
-                return new Point(point.getX() + 1, point.getY() - 1);
-            }))
+            if (check(field, new Point(0, fieldSize - 1), point -> new Point(point.getX() + 1, point.getY() - 1)))
                 return field.getFigure(new Point(0, fieldSize - 1));
 
         } catch (final InvalidPointException e) {
