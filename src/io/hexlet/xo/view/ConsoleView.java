@@ -1,22 +1,21 @@
 package io.hexlet.xo.view;
 
 
-import io.hexlet.xo.controllers.CurrentMoveController;
-import io.hexlet.xo.controllers.MoveController;
-import io.hexlet.xo.controllers.WinnerController;
+import io.hexlet.xo.controllers.*; //CurrentMoveController;
+//import io.hexlet.xo.controllers.MoveController;
+//import io.hexlet.xo.controllers.WinnerController;
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Game;
 import io.hexlet.xo.model.Point;
 import io.hexlet.xo.model.exceptions.AlreadyOccupiedException;
 import io.hexlet.xo.model.exceptions.InvalidPointException;
-
 import java.util.Scanner;
 
 public class ConsoleView {
 
     private final CurrentMoveController currentMoveController = new CurrentMoveController();
-    private final WinnerController winnerController = new WinnerController();
+    public final WinnerController winnerController = new WinnerController();
     private final MoveController moveController = new MoveController();
 
     public void show(final Game game) {
@@ -40,8 +39,14 @@ public class ConsoleView {
         final Field field = game.getField();
         final Figure currentFigure = currentMoveController.currentMove(field);
         if (currentFigure == null) {
-
-            final Figure winner = winnerController.getWinner(field);
+            Figure winner = null;
+            try {
+                winner = winnerController.getWinner(field);
+            } catch (InvalidPointException e) {
+                e.printStackTrace();
+            } catch (AlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
             if (winner == null) {
 
                 System.out.print("No winner! No move lefts!");
@@ -51,16 +56,17 @@ public class ConsoleView {
                 System.out.format("Winner is: %s\n", winner);
                 return false;
             }
-            System.out.format("Please enter move point for: %s\n", currentFigure);
-            final Point point = askPoint();
+
+            System.out.println("Please enter move point for: " + currentFigure.);
             try {
-                moveController.applyFigure(field, point, currentFigure);
+                moveController.applyFigure(field, askPoint(), currentFigure);
             } catch (InvalidPointException | AlreadyOccupiedException e) {
                 e.printStackTrace();
                 System.out.println("Point is invalid!");
             }
             return true;
         }
+        return false;
     }
 
     private void printLine(final Field field, final int x) {
@@ -94,12 +100,12 @@ public class ConsoleView {
 
     private int askCoordinate(final String coordinateName) {
 
-        System.out.format("Please input %s", coordinateName);
+        System.out.format("Please input %s/n", coordinateName);
         final Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
 
-    private Point askPoint() {
+    public final Point askPoint() {
 
         return new Point(askCoordinate("X") - 1, askCoordinate("Y") - 1);
     }
