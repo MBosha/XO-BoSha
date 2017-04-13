@@ -8,12 +8,12 @@ import io.hexlet.xo.model.exceptions.InvalidPointException;
 
 public class WinnerController {
 
-  public static Figure getWinner(final Field field) /*throws InvalidPointException, AlreadyOccupiedException*/ {
+  public Figure getWinner(final Field field) throws InvalidPointException {
 
     final int fieldSize = field.getSize();
-    Figure firstFigure;
-    Figure currentFigure;
-    Figure nextFigure;
+    Figure firstFigure = null;
+    Figure currentFigure = null;
+    Figure nextFigure = null;
     int Counter;
     //вертикали
     Counter = 0;
@@ -24,7 +24,9 @@ public class WinnerController {
         }
         for (int j = 0; j < fieldSize - 1; j++) {
             currentFigure = field.getFigure(new Point(i, j));
+
             nextFigure = field.getFigure(new Point(i, j + 1));
+
             if (currentFigure == nextFigure) {
                 Counter++;
             }
@@ -37,12 +39,15 @@ public class WinnerController {
     Counter = 0;
     for (int i = 0; i < fieldSize; i++) {
         firstFigure = field.getFigure(new Point(0, i));
+
         if (firstFigure == null) {
             break;
         }
         for (int j = 0; j < fieldSize - 1; j++) {
             currentFigure = field.getFigure(new Point(j, i));
+
             nextFigure = field.getFigure(new Point(j, i + 1));
+
             if (currentFigure == nextFigure) {
                 Counter++;
             }
@@ -55,12 +60,12 @@ public class WinnerController {
     //главная диагональ
     Counter = 0;
     for (int i = 0; i < fieldSize - 1; i++) {
-        firstFigure = field.getFigure(new Point(0, 0));
         if (firstFigure == null) {
             break;
         }
+
         currentFigure = field.getFigure(new Point(i, i));
-        nextFigure = field.getFigure(new Point(i + 1, i + 1));
+         nextFigure = field.getFigure(new Point(i + 1, i + 1));
         if (currentFigure == nextFigure) {
             Counter++;
         }
@@ -71,7 +76,7 @@ public class WinnerController {
     //побочная диагональ
     Counter = 0;
     for (int i = 0; i < fieldSize - 1; i++) {
-      firstFigure = field.getFigure(new Point(0, fieldSize));
+        firstFigure = field.getFigure(new Point(0, fieldSize));
         if (firstFigure == null) {
             break;
         }

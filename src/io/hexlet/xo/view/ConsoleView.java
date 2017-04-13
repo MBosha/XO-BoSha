@@ -17,6 +17,7 @@ public class ConsoleView {
     private final CurrentMoveController currentMoveController = new CurrentMoveController();
     public final WinnerController winnerController = new WinnerController();
     private final MoveController moveController = new MoveController();
+    private Figure winner;
 
     public void show(final Game game) {
 
@@ -38,35 +39,29 @@ public class ConsoleView {
 
         final Field field = game.getField();
         final Figure currentFigure = currentMoveController.currentMove(field);
-        if (currentFigure == null) {
-            Figure winner = null;
-            try {
-                winner = WinnerController.getWinner(field);
-            } catch (InvalidPointException e) {
-                e.printStackTrace();
-            } catch (AlreadyOccupiedException e) {
-                e.printStackTrace();
-            }
-            if (winner == null) {
 
-                System.out.print("No winner! No move lefts!");
-                return false;
-            } else {
-
-                System.out.format("Winner is: %s\n", winner);
-                return false;
-            }
-
-            System.out.format("Please enter move point for: %s\n", currentFigure);
-            try {
-                moveController.applyFigure(field, askPoint(), currentFigure);
-            } catch (InvalidPointException | AlreadyOccupiedException e) {
-                e.printStackTrace();
-                System.out.println("Point is invalid!");
-            }
-            return true;
+        try {
+        winner = winnerController.getWinner(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
         }
-        return false;
+
+
+        if (winner == null & currentFigure == null) {
+            System.out.print("No winner! No move lefts!");
+            return false;
+        } else if (winner != null) {
+            System.out.format("Winner is: %s\n", winner);
+            return false;
+        }
+        try {
+            moveController.applyFigure(field, askPoint(), currentFigure);
+        } catch (AlreadyOccupiedException e) {
+            e.printStackTrace();
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     private void printLine(final Field field, final int x) {
@@ -98,15 +93,21 @@ public class ConsoleView {
         System.out.println("-----------");
     }
 
-    private int askCoordinate(final String coordinateName) {
+    private int askCoordinate(final String coordinateName) throws InvalidPointException {
 
-        System.out.format("Please input %s/n", coordinateName);
+        System.out.format("Please input %s:\n", coordinateName);
         final Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        int step = 0;
+        try {
+            step = scanner.nextInt();
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+        return step;
     }
 
-    public final Point askPoint() {
+    public final Point askPoint() throws InvalidPointException {
 
-        return new Point(askCoordinate("X") - 1, askCoordinate("Y") - 1);
+            return new Point(askCoordinate("X") - 1, askCoordinate("Y") - 1);
     }
 }
