@@ -1,9 +1,9 @@
 package io.hexlet.xo.view;
 
 
-import io.hexlet.xo.controllers.*; //CurrentMoveController;
-//import io.hexlet.xo.controllers.MoveController;
-//import io.hexlet.xo.controllers.WinnerController;
+import io.hexlet.xo.controllers.CurrentMoveController;
+import io.hexlet.xo.controllers.MoveController;
+import io.hexlet.xo.controllers.WinnerController;
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Game;
@@ -41,7 +41,7 @@ public class ConsoleView {
         if (currentFigure == null) {
             Figure winner = null;
             try {
-                winner = winnerController.getWinner(field);
+                winner = WinnerController.getWinner(field);
             } catch (InvalidPointException e) {
                 e.printStackTrace();
             } catch (AlreadyOccupiedException e) {
@@ -57,7 +57,7 @@ public class ConsoleView {
                 return false;
             }
 
-            System.out.println("Please enter move point for: " + currentFigure.);
+            System.out.format("Please enter move point for: %s\n", currentFigure);
             try {
                 moveController.applyFigure(field, askPoint(), currentFigure);
             } catch (InvalidPointException | AlreadyOccupiedException e) {
