@@ -8,11 +8,10 @@ import io.hexlet.xo.model.exceptions.InvalidPointException;
 
 public class WinnerController {
 
-    public WinnerController() {
+  public WinnerController() {
 
-    }
+    public static Figure getWinner(final Field field) /*throws InvalidPointException, AlreadyOccupiedException*/ {
 
-    public static Figure getWinner(final Field field) throws InvalidPointException, AlreadyOccupiedException {
         final int fieldSize = field.getSize();
         Figure firstFigure;
         Figure currentFigure;
@@ -88,6 +87,6 @@ public class WinnerController {
             }
         }
         return null;
+      }
     }
-
 }
