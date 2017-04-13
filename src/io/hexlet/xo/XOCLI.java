@@ -7,7 +7,7 @@ import io.hexlet.xo.model.Player;
 import io.hexlet.xo.view.ConsoleView;
 
 public class XOCLI {
-
+    //здесь написаен код
     public static void main(final  String[] args) {
 
         final String name1 = "BoSha";
