@@ -76,7 +76,7 @@ public class WinnerController {
     //побочная диагональ
     Counter = 0;
     for (int i = 0; i < fieldSize - 1; i++) {
-        firstFigure = field.getFigure(new Point(0, fieldSize));
+        firstFigure = field.getFigure(new Point(0, fieldSize - 1));
         if (firstFigure == null) {
             break;
         }

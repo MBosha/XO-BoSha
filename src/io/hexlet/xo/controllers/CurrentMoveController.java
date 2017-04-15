@@ -8,7 +8,7 @@ import io.hexlet.xo.model.exceptions.InvalidPointException;
 
 public class CurrentMoveController {
 
-    public Figure currentMove(final Field field) {
+    public Figure currentMove(final Field field) throws InvalidPointException {
         int countFigure = 0;
         for (int x = 0; x < field.getSize(); x++) {
             countFigure += countFiguresInTheRow(field, x);
@@ -23,14 +23,11 @@ public class CurrentMoveController {
         return Figure.O;
     }
 
-    private int countFiguresInTheRow(final Field field, final int row) {
+    private int countFiguresInTheRow(final Field field, final int row) throws InvalidPointException {
         int countFigure = 0;
         for (int x = 0; x < field.getSize(); x++) {
-            try {
-                if (field.getFigure(new Point(x, row)) != null)
-                     countFigure++;
-            } catch (InvalidPointException e) {
-                e.printStackTrace();
+            if (field.getFigure(new Point(x, row)) != null) {
+                countFigure++;
             }
         }
         return countFigure;

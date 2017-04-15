@@ -28,7 +28,8 @@ public class ConsoleView {
             if (x > 0) {
                 printSeparator();
             }
-            printLine(field, x);
+                printLine(field, x);
+
         }
         //printSeparator();
 
@@ -38,7 +39,12 @@ public class ConsoleView {
     public boolean move(final Game game) {
 
         final Field field = game.getField();
-        final Figure currentFigure = currentMoveController.currentMove(field);
+        Figure currentFigure = Figure.X;
+        try {
+            currentFigure = currentMoveController.currentMove(field);
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
 
         try {
         winner = winnerController.getWinner(field);
@@ -69,15 +75,10 @@ public class ConsoleView {
         //printSeparator();
         //System.out.print("|");
         for (int y = 0; y < field.getSize(); y++) {
-
             Point point = new Point(x, y);
-            final Figure figure;
-            try {
-                figure = field.getFigure(point);
-            } catch (InvalidPointException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+            Figure figure;
+            figure = field.getFigure(point);
+
             System.out.print(" ");
             System.out.print(figure != null ? figure : " ");
             System.out.print(" ");

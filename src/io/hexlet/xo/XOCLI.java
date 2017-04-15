@@ -14,6 +14,7 @@ public class XOCLI {
 
         final String name1 = "BoSha";
         final String name2 = "MiSha";
+        boolean loop = true;
 
         final Player[] players = new Player[2];
         players[0] = new Player(name1, Figure.X);
