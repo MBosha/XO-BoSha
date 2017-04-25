@@ -54,8 +54,9 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(-1,0);
 
-        field.getFigure(inputPoint);
-        fail();
+        assertNull(field.getFigure(inputPoint));
+
+        //fail();
     }
 
     @Test
@@ -65,8 +66,10 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(0,-1);
 
+        assertNull(field.getFigure(inputPoint));
+/*
         field.getFigure(inputPoint);
-        fail();
+        fail();*/
     }
 
     @Test
@@ -76,8 +79,9 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(field.getSize() + 1,0);
 
-        field.getFigure(inputPoint);
-        fail();
+        assertNull(field.getFigure(inputPoint));
+        /*field.getFigure(inputPoint);
+        fail();*/
     }
 
     @Test
@@ -87,8 +91,8 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(0,field.getSize() + 1);
 
-        field.getFigure(inputPoint);
-        fail();
+        assertNull(field.getFigure(inputPoint));
+        //fail();
     }
 
     //@Test
