@@ -20,26 +20,32 @@ public class Field {
         return filedSize;
     }
 
-    public Figure getFigure(final Point point) throws InvalidPointException {
-        if (!checkPoint(point)) {
-            throw new InvalidPointException();
+    public Figure getFigure(final Point point) {
+        if (checkPoint(point)) {
+            return field[point.getX()][point.getY()];
+            //throw new InvalidPointException();
+        } else {
+            System.out.print("Wrong point! " + point.getX() + " " + point.getY());
+            return null;
         }
-        return field[point.x][point.y];
     }
 
-    public void setFigure(final Point point, final Figure figure) throws InvalidPointException {
-        if (!checkPoint(point)) {
-            throw new InvalidPointException();
+    public void setFigure(final Point point, final Figure figure) {
+        if (checkPoint(point)) {
+            field[point.getX()][point.getY()] = figure;
+            //throw new InvalidPointException();
+        } else {
+            System.out.println("Wrong point!");
         }
-        field[point.x][point.y] = figure;
     }
 
     private boolean checkPoint(final Point point) {
-        return checkCoordinate(point.x, field.length) && checkCoordinate(point.y, field[point.x].length);
+        boolean Result = checkCoordinate(point.getX(), filedSize) && checkCoordinate(point.getY(), filedSize);
+        return Result;
     }
 
     private boolean checkCoordinate(final int coordinate, final int maxCoordinate) {
-        return coordinate >= MIN_COORDINATE && coordinate < maxCoordinate;
+        return coordinate >= MIN_COORDINATE && coordinate <= maxCoordinate;
     }
-
 }
+

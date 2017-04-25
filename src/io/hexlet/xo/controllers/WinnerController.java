@@ -1,68 +1,104 @@
 package io.hexlet.xo.controllers;
 
-
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Point;
+import io.hexlet.xo.model.exceptions.AlreadyOccupiedException;
 import io.hexlet.xo.model.exceptions.InvalidPointException;
 
-@SuppressWarnings("ALL")
 public class WinnerController {
 
+  public Figure getWinner(final Field field) throws InvalidPointException {
 
-    @SuppressWarnings("ControlFlowStatementWithoutBraces")
-    public Figure getWinner(final Field field) {
-        final int fieldSize = field.getSize();
-        try {
-            for (int i = 0; i < fieldSize; i++)
-                if (check(field, new Point(i, 0), (Point point) -> new Point(point.getX(), point.getY() + 1)))
-                    return field.getFigure(new Point(i, 0));
+    final int fieldSize = field.getSize();
+    //Figure firstFigure;
+    Figure currentFigure;
+    Figure nextFigure;
+    int Counter = 0;
 
-            for (int i = 0; i < fieldSize; i++)
-                if (check(field, new Point(0, i), point -> new Point(point.getX() + 1, point.getY())))
-                    return field.getFigure(new Point(0, i));
-
-            if (check(field, new Point(0, 0), point -> new Point(point.getX() + 1, point.getY() + 1)))
-                return field.getFigure(new Point(0, 0));
-
-            if (check(field, new Point(0, fieldSize - 1), point -> new Point(point.getX() + 1, point.getY() - 1)))
-                return field.getFigure(new Point(0, fieldSize - 1));
-
-        } catch (final InvalidPointException e) {
-            e.printStackTrace();
+    //проверка горизонтали
+    for (int x = 0; x < fieldSize; x++) {
+        Figure firstFigure = field.getFigure(new Point(x, 0));
+        if (firstFigure == null) {
+            break;
         }
-        return null;
+        Counter = 0;
+        for (int y = 0; y < fieldSize - 1; y++) {
+            currentFigure = field.getFigure(new Point(x, y));
+            nextFigure = field.getFigure(new Point(x, y + 1));
+            if (nextFigure == null) {
+                break;
+            }
+            if (currentFigure == nextFigure) {
+                Counter++;
+            }
+        }
+        if (Counter == fieldSize - 1) {
+            return firstFigure;
+        }
+    }
+    //проверка вертикали
+    for (int y = 0; y < fieldSize; y++) {
+        Figure firstFigure = field.getFigure(new Point(0, y));
+
+        if (firstFigure == null) {
+            break;
+        }
+        Counter = 0;
+        for (int x = 0; x < fieldSize - 1; x++) {
+            currentFigure = field.getFigure(new Point(x, y));
+            nextFigure = field.getFigure(new Point(x, y + 1));
+            if (nextFigure == null) {
+                break;
+            }
+            if (currentFigure == nextFigure) {
+                Counter++;
+            }
+        }
+        if (Counter == fieldSize - 1) {
+            return firstFigure;
+        }
     }
 
-    private boolean check(final Field field,
-                          final Point currentPoint,
-                          final IPointGenerator pointGenerator) {
-        final Figure currentFigure;
-        final Figure nextFigure;
-        final Point nextPoint = pointGenerator.next(currentPoint);
-        try {
-            currentFigure = field.getFigure(currentPoint);
-
-            if (currentFigure == null)
-                return false;
-
-            nextFigure = field.getFigure(nextPoint);
-        } catch (final InvalidPointException e) {
-            return true;
+    //главная диагональ
+    Counter = 0;
+    for (int i = 0; i < fieldSize - 1; i++) {
+        Figure firstFigure = field.getFigure(new Point(0, 0));
+        if (firstFigure == null) {
+            break;
         }
 
-        //noinspection SimplifiableIfStatement
-        if (currentFigure != nextFigure) {
-            return false;
+        currentFigure = field.getFigure(new Point(i, i));
+        nextFigure = field.getFigure(new Point(i + 1, i + 1));
+        if (nextFigure == null) {
+            break;
         }
-
-        return check(field, nextPoint, pointGenerator);
+        if (currentFigure == nextFigure) {
+            Counter++;
+        }
+        if (Counter == fieldSize - 1) {
+            return firstFigure;
+        }
     }
-
-    private interface IPointGenerator {
-
-        Point next(final Point point);
-
+    //побочная диагональ
+    Counter = 0;
+    for (int i = 0; i < fieldSize - 1; i++) {
+        Figure firstFigure = field.getFigure(new Point(0, fieldSize - 1));
+        if (firstFigure == null) {
+            break;
+        }
+        currentFigure = field.getFigure(new Point(fieldSize - i, i));
+        nextFigure = field.getFigure(new Point(fieldSize - i - 1, i - 1));
+        if (nextFigure == null) {
+            break;
+        }
+        if (currentFigure == nextFigure) {
+            Counter++;
+        }
+        if (Counter == fieldSize - 1) {
+            return firstFigure;
+        }
     }
-
+    return null;
+  }
 }

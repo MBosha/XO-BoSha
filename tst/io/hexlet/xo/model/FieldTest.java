@@ -54,25 +54,22 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(-1,0);
 
-        try {
+        assertNull(field.getFigure(inputPoint));
 
-            field.getFigure(inputPoint);
-            fail();
-        } catch (final InvalidPointException e) {}
+        //fail();
     }
 
     @Test
-    public void getFigureWhenYIsLessThenZero() throws Exception {
+    public void getFigureWhenYIsLessThenZero() throws Exception{
 
         int fieldSize = 3;
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(0,-1);
 
-        try {
-
-            field.getFigure(inputPoint);
-            fail();
-        } catch (final InvalidPointException e) {}
+        assertNull(field.getFigure(inputPoint));
+/*
+        field.getFigure(inputPoint);
+        fail();*/
     }
 
     @Test
@@ -82,11 +79,9 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(field.getSize() + 1,0);
 
-        try {
-
-            field.getFigure(inputPoint);
-            fail();
-        } catch (final InvalidPointException e) {}
+        assertNull(field.getFigure(inputPoint));
+        /*field.getFigure(inputPoint);
+        fail();*/
     }
 
     @Test
@@ -96,11 +91,8 @@ public class FieldTest {
         final Field field = new Field(fieldSize);
         final Point inputPoint = new Point(0,field.getSize() + 1);
 
-        try {
-
-            field.getFigure(inputPoint);
-            fail();
-        } catch (final InvalidPointException e) {}
+        assertNull(field.getFigure(inputPoint));
+        //fail();
     }
 
     //@Test
