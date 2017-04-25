@@ -21,14 +21,23 @@ public class ConsoleView {
 
     public void show(final Game game) {
 
-        System.out.format("Game name:%s\n", game.getName());
-        final Field field = new Field(3);
-        for (int x = 0; x < field.getSize(); x++) {
+        Field showField = game.getField();
+
+        System.out.format("Game name: %s\n", game.getName());
+        try {
+            if (winner == null) {
+                System.out.format("Step figure: %s\n", currentMoveController.currentMove(game.getField()));
+            }
+        } catch (InvalidPointException e) {
+            e.printStackTrace();
+        }
+        //final Field field = new Field(3);
+        for (int x = 0; x < showField.getSize(); x++) {
 
             if (x > 0) {
                 printSeparator();
             }
-                printLine(field, x);
+                printLine(game.getField(), x);
 
         }
         //printSeparator();
@@ -102,7 +111,9 @@ public class ConsoleView {
         try {
             step = scanner.nextInt();
         } catch (Exception e) {
-        e.printStackTrace();
+
+            System.out.println("Wrong symbol!");
+            //e.printStackTrace();
         }
         return step;
     }
